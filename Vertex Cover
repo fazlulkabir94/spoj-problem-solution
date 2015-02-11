@@ -1,0 +1,50 @@
+# include <iostream>
+# include <cstdio>
+# include <cstring>
+# include <queue>
+# include <vector>
+# define pb(x) push_back(x)
+# define s(x) scanf("%d",&x);
+# define MAXN 100002
+using namespace std;
+int dp[MAXN][5];
+int par[MAXN];
+vector<int>edges[MAXN];
+int f(int u,int isGraid)
+{
+    if(edges[u].size()==0)return 0;
+    if(dp[u][isGraid]!=-1)return dp[u][isGraid];
+    int sum=0;
+    for(int i=0;i<(int)edges[u].size();i++)
+    {
+        int v=edges[u][i];
+        if(v!=par[u])
+        {
+        par[v]=u;
+        if(isGraid==0)sum+=f(v,1);
+        else
+            sum+=min(f(v,1),f(v,0));
+        }
+    }
+    return dp[u][isGraid]=sum+isGraid;
+}
+int main()
+{
+
+    //freopen("in.text","r",stdin);
+     int n;
+    memset(dp,-1,sizeof dp);
+    s(n);
+    for(int i=1;i<n;i++)
+    {
+        int u,v;
+        s(u);s(v);
+        edges[u].pb(v);
+        edges[v].pb(u);
+    }
+    int ans=0;
+    ans=min(f(1,1),f(1,0));
+    printf("%d\n",ans);
+    return 0;
+}
+
