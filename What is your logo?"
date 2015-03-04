@@ -1,0 +1,29 @@
+# include <bits/stdc++.h>
+using namespace std;
+bool dp[2001][2001];
+int main()
+{
+    //freopen("in.txt","r",stdin);
+    int x,y,i;
+    char str[1001];
+    int c;
+    while(1)
+    {
+        scanf("%s",str);
+        if(str[0]=='Q')break;
+        memset(dp,false,sizeof dp);
+        x=y=1001;
+        c=0;
+        for(i=0;str[i]!='Q';i++)
+        {
+            dp[x][y]=true;
+            if(str[i]=='U')x--;
+            if(str[i]=='D')x++;
+            if(str[i]=='L')y--;
+            if(str[i]=='R')y++;
+            if(dp[x][y]==true)c++;
+        }
+        printf("%d\n",c);
+    }
+    return 0;
+}
